@@ -1,0 +1,74 @@
+﻿@page "/counter"
+@using Lektion14.Classes;
+@using Lektion14.Extensions;
+@using Lektion14.Services;
+@inject BookStore store
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<input @bind="title" />
+<input @bind="price" />
+<button class="btn btn-success" @onclick="@(() => store.AddBook(title, price))">Add</button>
+
+<ol>
+    @foreach (var book in store.Books)
+    {
+        <li>@book.Name
+            <button class="btn btn-warning"
+                @onclick="@(() => store.RemoveBook(book.Id))">Remove</button>
+        </li>
+    }
+</ol>
+<p>@error</p>
+
+@code {
+    private int currentCount = 0;
+
+    string title = string.Empty, error = string.Empty;
+    double price = 0;
+
+    Queue<Animal> q = new();
+    Stack<Animal> s = new();
+
+    private void IncrementCount()
+    {
+        //var book2 = new Book(2, "Jonas", 10);
+        //var total = Calculations.CalcTotal(book2.Price, 1.06);
+
+        //var bookData = book2.GetBookData();
+
+        //var total = book2.CalcTotal(3).CalcVat(1.06);
+        //var t = total.CalcVat(1.06);
+
+        try
+        {
+            error = string.Empty;
+            var cat = new Animal("Spotty", "Cat");
+
+
+            s.Push(cat);
+            s.Push(new Animal("Max", "Dog"));
+            var a1 = s.Pop();
+            var a2 = s.Pop();
+
+            q.Enqueue(cat);
+            q.Enqueue(new Animal("Max", "Dog"));
+            var animal1 = q.Dequeue();
+            var animal2 = q.Dequeue();
+            var animal3 = q.Dequeue();
+        }
+        catch
+        {
+            error = "Läsfel";
+        }
+
+
+
+        currentCount++;
+    }
+}
